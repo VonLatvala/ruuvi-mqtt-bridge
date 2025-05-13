@@ -22,7 +22,7 @@ jobs:
 
       - name: Build container and compile binary
         run: |
-          env \
+          env
           docker build \
             -f .devcontainer/Dockerfile \
             -t ruuvi-mqtt-bridge-dev \
