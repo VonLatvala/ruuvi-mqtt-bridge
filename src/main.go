@@ -40,6 +40,37 @@ var measurementFields = []string{
 	"accelRawSequence", "accelRawTimestamp",
 }
 
+var fieldUnits = map[string]string{
+	"temperature":       "°C",
+	"humidity":          "%",
+	"pressure":          "hPa",
+	"battery":           "V",
+	"rssi":              "dBm",
+	"dewPoint":          "°C",
+	"accelX":            "g",
+	"accelY":            "g",
+	"accelZ":            "g",
+	"accelTotal":        "g",
+	"accelAngleX":       "°",
+	"accelAngleY":       "°",
+	"accelAngleZ":       "°",
+	"accelRawX":         "g",
+	"accelRawY":         "g",
+	"accelRawZ":         "g",
+	"accelRawTotal":     "g",
+	"movementCounter":   "count",
+	"accelCounter":      "count",
+	"accelSequence":     "",
+	"accelTimestamp":    "s",
+	"accelStatus":       "",
+	"accelMotion":       "",
+	"accelRawCounter":   "count",
+	"accelRawSequence":  "",
+	"accelRawTimestamp": "s",
+	"accelRawStatus":    "",
+	"accelRawMotion":    "",
+}
+
 func main() {
 	flag.Parse()
 
@@ -197,16 +228,20 @@ func sendDiscoveryConfigs(client mqtt.Client, names map[string]string) {
 			configTopic := fmt.Sprintf("%s/sensor/%s/config", *discoveryPrefix, id)
 			stateTopic := fmt.Sprintf("%s/%s", *mqttTopicPrefix, name)
 			config := map[string]interface{}{
-				"name":        fmt.Sprintf("%s %s", name, strings.Title(field)),
-				"state_topic": stateTopic,
-				"value_template": fmt.Sprintf("{{ value_json.%s }}", field),
-				"unique_id":   id,
+				"name":            fmt.Sprintf("%s %s", name, strings.Title(field)),
+				"state_topic":     stateTopic,
+				"value_template":  fmt.Sprintf("{{ value_json.%s }}", field),
+				"unique_id":       id,
 				"device": map[string]interface{}{
 					"identifiers":  []string{"ruuvi_" + baseID},
 					"name":         name,
 					"manufacturer": "Ruuvi",
 					"model":        "RuuviTag",
 				},
+			}
+
+			if unit, ok := fieldUnits[field]; ok && unit != "" {
+				config["unit_of_measurement"] = unit
 			}
 			payload, _ := json.Marshal(config)
 			client.Publish(configTopic, 0, true, payload)
