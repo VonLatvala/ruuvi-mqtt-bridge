@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.1.0...v0.2.0) (2025-05-13)
+
+
+### Features
+
+* Add binaries to releases ([2ac9f9f](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/2ac9f9f5756a4aeea55a982858c55ba7262f7bd9))
+
 ## [0.1.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.0.1...v0.1.0) (2025-05-13)
 
 
