@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.0.1...v0.1.0) (2025-05-13)
+
+
+### Features
+
+* Initial release workflow ([97a67c7](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/97a67c79e4fce106b22e9fa9d1feaa6215f9e145))
+
+
+### Bug Fixes
+
+* Add release type ([8ad199b](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/8ad199b854a8ca056875e5a2d8787acd25b9eed2))
+* Attempted release-please workflow fix ([c4084a6](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/c4084a61dfd1ff7af8b9721716f20ba3e1728198))
+
 ## [1.0.0] - 2025-05-13
 
 ### Added
