@@ -17,3 +17,4 @@ jobs:
       - uses: googleapis/release-please-action@v4
         with:
           release-type: go
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
