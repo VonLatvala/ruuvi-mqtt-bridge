@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+name: Release Please PR
+
+jobs:
+  release-please-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build container and compile binary
+        run: |
+          docker build \
+            -f .devcontainer/Dockerfile \
+            -t ruuvi-mqtt-bridge-dev \
+            --build-arg USER_ID=$(id -u) \
+            --build-arg GROUP_ID=$(id -g) \
+            .
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            --user $(id -u):$(id -g) \
+            ruuvi-mqtt-bridge-dev \
+            go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
+
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: go
+
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ./bin/ruuvi-mqtt-bridge-linux-amd64
