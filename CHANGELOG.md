@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.2](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.5.1...v0.5.2) (2025-05-13)
+
+
+### Bug Fixes
+
+* Change build pipeline to trigger on tag pushes 'von: ([c35345c](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/c35345cc6ded7a6f7847fc61964f3dc5e4efa8d8))
+* Remove PAT from release-please, as it does ([92b9513](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/92b9513460dc61fa0b66fad3f8c941b84e034b67))
+
 ## [0.5.1](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.5.0...v0.5.1) (2025-05-13)
 
 
