@@ -218,7 +218,7 @@ func executeInfluxQuery() (map[string]map[string]interface{}, error) {
 	`, *influxMeasurement)
 
 	queryURL := fmt.Sprintf("%s/query?db=%s&q=%s", *influxURL, *influxDB, url.QueryEscape(query))
-	kitloglevel.Info(logger).Log("msg", "InfluxDB Query URL", queryURL)
+	kitloglevel.Info(logger).Log("msg", "InfluxDB Query URL", "queryURL", queryURL)
 
 	resp, err := http.Get(queryURL)
 	if err != nil {
