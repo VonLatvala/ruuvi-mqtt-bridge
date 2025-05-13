@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger only on version tags, like v1.0.0
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.24'
+
+      # Install dependencies and build the binaries for your app
+      - name: Build the binaries
+        run: |
+          go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
+
+      # Create a tag for the release if it doesn't exist
+      - name: Check if version tag exists
+        id: check_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          echo "Latest tag: $TAG"
+          if [ -z "$TAG" ]; then
+            echo "No tags found!"
+            exit 1
+          fi
+          echo "::set-output name=tag::$TAG"
+
+      # Upload binaries to GitHub Releases
+      - name: Upload release binaries
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            bin/ruuvi-mqtt-bridge-linux-amd64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
