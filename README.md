@@ -1,7 +1,8 @@
 # Ruuvi MQTT Bridge
 
-![Build Status](https://img.shields.io/github/workflow/status/VonLatvala/ruuvi-mqtt-bridge/CI)
+![Build Status](https://img.shields.io/github/actions/workflow/status/VonLatvala/ruuvi-mqtt-bridge/release-please.yml)
 ![Release Version](https://img.shields.io/github/v/release/VonLatvala/ruuvi-mqtt-bridge)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/VonLatvala/ruuvi-mqtt-bridge)
 ![License](https://img.shields.io/github/license/VonLatvala/ruuvi-mqtt-bridge)
 
 ## Overview
