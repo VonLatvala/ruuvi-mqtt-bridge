@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.3.0...v0.4.0) (2025-05-13)
+
+
+### Features
+
+* Modify release to use devcontainer ([caec6a7](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/caec6a76911137c1415a6c02ba3c5e1874ea44ba))
+
 ## [0.2.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.1.0...v0.2.0) (2025-05-13)
 
 
