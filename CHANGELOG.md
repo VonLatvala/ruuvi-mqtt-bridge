@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.4.1...v0.5.0) (2025-05-13)
+
+
+### Features
+
+* Use PAT for GHA releases ([acec968](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/acec968cd6294c99c34cf0ee9426fa4432f4c676))
+
 ## [0.4.1](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.4.0...v0.4.1) (2025-05-13)
 
 
