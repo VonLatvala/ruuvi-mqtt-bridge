@@ -5,13 +5,14 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"time"
 
+	kitlog "github.com/go-kit/log"
+	kitloglevel "github.com/go-kit/log/level"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
@@ -105,18 +106,25 @@ var fieldIcons = map[string]string{
 	"accelRawTimestamp": "mdi:clock-outline",
 }
 
+var logger kitlog.Logger
+
+
 
 func main() {
+	logger = kitlog.NewLogfmtLogger(os.Stdout)
+	logger = kitlog.With(logger, "ts", kitlog.DefaultTimestampUTC, "caller", kitlog.DefaultCaller)
+
 	flag.Parse()
 
-	log.Println("Loading MAC → name mappings...")
+	kitloglevel.Info(logger).Log("msg", "Loading MAC → name mappings...")
 	names, err := loadProperties(*propertiesFile)
 	if err != nil {
-		log.Fatalf("Failed to read properties file: %v", err)
+		kitloglevel.Error(logger).Log("msg", "Failed to read properties file", "err", err)
+		os.Exit(1)
 	}
-	log.Printf("Loaded %d MAC name mappings", len(names))
+	kitloglevel.Info(logger).Log("msg", "Loaded MAC name mappings", "num", len(names))
 
-	log.Println("Connecting to MQTT broker...")
+	kitloglevel.Info(logger).Log("msg", "Connecting to MQTT broker...")
 	opts := mqtt.NewClientOptions().AddBroker(fmt.Sprintf("tcp://%s:%d", *mqttHost, *mqttPort))
 	opts.SetClientID("ruuvi-mqtt-bridge")
 	if *mqttUser != "" {
@@ -125,23 +133,24 @@ func main() {
 	}
 	client := mqtt.NewClient(opts)
 	if token := client.Connect(); token.Wait() && token.Error() != nil {
-		log.Fatalf("Failed to connect to MQTT: %v", token.Error())
+		kitloglevel.Error(logger).Log("msg", "Failed to connect to MQTT", "err", err)
+		os.Exit(1)
 	}
 	defer client.Disconnect(250)
-	log.Println("Connected to MQTT.")
+	kitloglevel.Info(logger).Log("msg", "Connected to MQTT.")
 
-	log.Println("Sending Home Assistant discovery configs...")
+	kitloglevel.Info(logger).Log("msg", "Sending Home Assistant discovery configs...")
 	sendDiscoveryConfigs(client, names)
 
 	for {
 		data, err := queryLatestInfluxWithBackoff()
 		if err != nil {
-			log.Printf("Final failure querying InfluxDB: %v", err)
+			kitloglevel.Error(logger).Log("msg", "Final failure querying InfluxDB", "err", err)
 			time.Sleep(*scrapeInterval)
 			continue
 		}
 
-		log.Printf("Retrieved %d MAC entries from InfluxDB", len(data))
+		kitloglevel.Info(logger).Log("msg", "Retrieved MAC entries from InfluxDB", "count", len(data))
 		for mac, fields := range data {
 			name := names[mac]
 			if name == "" {
@@ -151,7 +160,7 @@ func main() {
 			payload, _ := json.Marshal(fields)
 			client.Publish(topic, 0, true, payload)
 		}
-		log.Printf("Published %d MQTT messages", len(data))
+		kitloglevel.Info(logger).Log("msg", "Published MQTT messages", "num", len(data))
 		time.Sleep(*scrapeInterval)
 	}
 }
@@ -165,7 +174,7 @@ func queryLatestInfluxWithBackoff() (map[string]map[string]interface{}, error) {
 		if err == nil {
 			return data, nil
 		}
-		log.Printf("InfluxDB query failed (attempt %d/%d): %v. Retrying in %v...", i+1, maxRetries, err, backoff)
+		kitloglevel.Error(logger).Log("msg", "InfluxDB query failed. Retrying...", "attempt", i+1, "maxRetries", maxRetries, "err", err, "backoff", backoff)
 		time.Sleep(backoff)
 		backoff *= 2
 	}
@@ -209,7 +218,7 @@ func executeInfluxQuery() (map[string]map[string]interface{}, error) {
 	`, *influxMeasurement)
 
 	queryURL := fmt.Sprintf("%s/query?db=%s&q=%s", *influxURL, *influxDB, url.QueryEscape(query))
-	log.Printf("InfluxDB Query URL: %s", queryURL)
+	kitloglevel.Info(logger).Log("msg", "InfluxDB Query URL", queryURL)
 
 	resp, err := http.Get(queryURL)
 	if err != nil {
@@ -321,7 +330,7 @@ func getEnvOrFlagInt(env, name string, def int, desc string) *int {
 		if err == nil {
 			return flag.Int(name, parsed, desc)
 		}
-		log.Printf("Warning: could not parse %s as int, using default %d", val, def)
+		kitloglevel.Warn(logger).Log("msg", "Warning: could not parse attemptedValue as int, using default", "attemptedValue", val, "default", def)
 	}
 	return flag.Int(name, def, desc)
 }
@@ -333,7 +342,7 @@ func getEnvOrFlagDuration(env, name string, def time.Duration, desc string) *tim
 		if err == nil {
 			return flag.Duration(name, parsed, desc)
 		}
-		log.Printf("Warning: could not parse %s as duration, using default %s", val, def)
+		kitloglevel.Warn(logger).Log("msg", "Warning: could not parse attemptedValue as duration, using default", "attemptedValue", val, "default", def)
 	}
 	return flag.Duration(name, def, desc)
 }
