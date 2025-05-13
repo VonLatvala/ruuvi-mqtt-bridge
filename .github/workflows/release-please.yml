@@ -27,7 +27,7 @@ jobs:
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
             ruuvi-mqtt-bridge-dev \
-            git status && go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
+            id && ls -l . && git status && go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
 
       - uses: googleapis/release-please-action@v4
         id: release
