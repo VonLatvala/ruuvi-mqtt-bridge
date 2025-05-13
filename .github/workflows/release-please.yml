@@ -8,10 +8,10 @@ permissions:
   pull-requests: write
   issues: write
 
-name: release-please
+name: release
 
 jobs:
-  release-please:
+  release:
     runs-on: ubuntu-latest
     steps:
       # Checkout code
