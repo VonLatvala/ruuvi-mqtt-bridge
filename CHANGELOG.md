@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.1.0...v1.2.0) (2025-05-13)
+
+
+### Features
+
+* Add device classes and icons ([573d599](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/573d599eefd7a00b2b15878f61522e5f8c770b07))
+
 ## [1.1.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.0.0...v1.1.0) (2025-05-13)
 
 
