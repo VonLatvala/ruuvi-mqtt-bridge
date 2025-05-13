@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.5.2...v0.6.0) (2025-05-13)
+
+
+### Features
+
+* Change pipeline architecture ([0f7a0fd](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/0f7a0fd728a10043f7edcb2ee6b5c7e0c855d38a))
+
 ## [0.5.2](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.5.1...v0.5.2) (2025-05-13)
 
 
