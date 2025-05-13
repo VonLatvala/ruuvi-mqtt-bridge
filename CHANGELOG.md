@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.0.0...v1.1.0) (2025-05-13)
+
+
+### Features
+
+* Add units of measurement to discovery ([1419412](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/14194129f05697c06b15f2a87588ff27c293e986))
+
 ## 1.0.0 (2025-05-13)
 
 
