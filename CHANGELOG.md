@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.2.0...v1.3.0) (2025-05-13)
+
+
+### Features
+
+* use logfmt for logging ([18cf20f](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/18cf20f068b9b987dd77920228702ed4497ca53d))
+
 ## [1.2.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.1.0...v1.2.0) (2025-05-13)
 
 
