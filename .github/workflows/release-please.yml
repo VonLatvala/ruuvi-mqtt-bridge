@@ -22,12 +22,19 @@ jobs:
 
       - name: Build container and compile binary
         run: |
-          docker build -f .devcontainer/Dockerfile -t ruuvi-mqtt-bridge-dev .
+          docker build \
+            -f .devcontainer/Dockerfile \
+            -t ruuvi-mqtt-bridge-dev \
+            --build-arg USER_ID=$UID \
+            --build-arg GROUP_ID=$GID \
+            .
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
+            -u $UID \
+            -g $GID \
             ruuvi-mqtt-bridge-dev \
-            stat .git && id && git status && go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
+            go build -o bin/ruuvi-mqtt-bridge-linux-amd64 ./src
 
       - uses: googleapis/release-please-action@v4
         id: release
