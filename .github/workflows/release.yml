@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: |
           mkdir -p bin
-          go build -o bin/ruuvi_mqtt_bridge-${{ matrix.goos }}-${{ matrix.goarch }} .
+          go build -o bin/ruuvi_mqtt_bridge-${{ matrix.goos }}-${{ matrix.goarch }} ./src
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v2
