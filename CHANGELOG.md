@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.1](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.6.0...v0.6.1) (2025-05-13)
+
+
+### Bug Fixes
+
+* fix docker uid/gid for git to be ok ([5a7e87a](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/5a7e87af64d8b82399a3795c96b091d8f96fc676))
+* Use GHA uid/gid and remove debug ([80c47ca](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/80c47ca3f5fcdd618f37e4156421374b69c87766))
+
 ## [0.6.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v0.5.2...v0.6.0) (2025-05-13)
 
 
