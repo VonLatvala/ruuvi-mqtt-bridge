@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.3.0...v1.3.1) (2025-05-13)
+
+
+### Bug Fixes
+
+* Add missing label when logging influx query URL ([60efe54](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/60efe54eeec7befb418820969947ce8e2fbce666))
+
 ## [1.3.0](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.2.0...v1.3.0) (2025-05-13)
 
 
