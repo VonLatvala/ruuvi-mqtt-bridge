@@ -71,6 +71,41 @@ var fieldUnits = map[string]string{
 	"accelRawMotion":    "",
 }
 
+var fieldDeviceClasses = map[string]string{
+	"temperature":     "temperature",
+	"humidity":        "humidity",
+	"pressure":        "pressure",
+	"battery":         "battery",
+	"rssi":            "signal_strength",
+	"dewPoint":        "temperature",
+	"movementCounter": "motion",
+	"accelCounter":    "counter",
+	"accelRawCounter": "counter",
+}
+
+var fieldIcons = map[string]string{
+	"accelX":        "mdi:axis-x-arrow",
+	"accelY":        "mdi:axis-y-arrow",
+	"accelZ":        "mdi:axis-z-arrow",
+	"accelAngleX":   "mdi:rotate-left",
+	"accelAngleY":   "mdi:rotate-left",
+	"accelAngleZ":   "mdi:rotate-left",
+	"accelTotal":    "mdi:vibrate",
+	"accelMotion":   "mdi:run-fast",
+	"accelStatus":   "mdi:information",
+	"accelSequence": "mdi:format-list-numbered",
+	"accelTimestamp": "mdi:clock-outline",
+	"accelRawX":        "mdi:axis-x-arrow",
+	"accelRawY":        "mdi:axis-y-arrow",
+	"accelRawZ":        "mdi:axis-z-arrow",
+	"accelRawTotal":    "mdi:vibrate",
+	"accelRawMotion":   "mdi:run-fast",
+	"accelRawStatus":   "mdi:information",
+	"accelRawSequence": "mdi:format-list-numbered",
+	"accelRawTimestamp": "mdi:clock-outline",
+}
+
+
 func main() {
 	flag.Parse()
 
@@ -242,6 +277,12 @@ func sendDiscoveryConfigs(client mqtt.Client, names map[string]string) {
 
 			if unit, ok := fieldUnits[field]; ok && unit != "" {
 				config["unit_of_measurement"] = unit
+			}
+			if devClass, ok := fieldDeviceClasses[field]; ok {
+				config["device_class"] = devClass
+			}
+			if icon, ok := fieldIcons[field]; ok {
+				config["icon"] = icon
 			}
 			payload, _ := json.Marshal(config)
 			client.Publish(configTopic, 0, true, payload)
