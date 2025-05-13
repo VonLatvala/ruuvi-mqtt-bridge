@@ -4,8 +4,11 @@ FROM golang:1.24-bullseye
 RUN apt-get update && apt-get install -y \
     git curl vim build-essential
 
-# Set up work directory
-WORKDIR /workspace
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 
-# Add Go tools (optional)
-ENV GO111MODULE=on
+RUN groupadd -g $GROUP_ID devuser && \
+    useradd -m -u $USER_ID -g devuser devuser
+
+USER devuser
+WORKDIR /workspace
