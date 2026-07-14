@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.3.1...v1.3.2) (2026-07-14)
+
+
+### Bug Fixes
+
+* declare discovery units matching the influx schema (Pa, mV, mG) ([cc830cf](https://github.com/VonLatvala/ruuvi-mqtt-bridge/commit/cc830cfb212236c2d7435f41b27c1218f4e52e13))
+
 ## [1.3.1](https://github.com/VonLatvala/ruuvi-mqtt-bridge/compare/v1.3.0...v1.3.1) (2025-05-13)
 
 
