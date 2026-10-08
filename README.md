@@ -76,6 +76,8 @@ The application supports configuration via **environment variables** or **comman
 | InfluxDB URL         | `INFLUX_URL`         | `-influx-url`         | `http://localhost:8086`  | Base URL of your InfluxDB instance.                            |
 | InfluxDB Name        | `INFLUX_DB`          | `-influx-db`          | `ruuvi`                  | Name of the InfluxDB database.                                 |
 | InfluxDB Measurement | `INFLUX_MEASUREMENT` | `-influx-measurement` | `ruuvi_measurements`     | InfluxDB measurement name.                                     |
+| InfluxDB Username    | `INFLUX_USER`        | `-influx-user`        | *(none)*                 | Sent as HTTP Basic auth; leave empty for an auth-less InfluxDB. |
+| InfluxDB Password    | `INFLUX_PASSWORD`    | `-influx-password`    | *(none)*                 | Password for `INFLUX_USER`. Never put credentials in `INFLUX_URL`: the query URL is logged. |
 | MQTT Host            | `MQTT_HOST`          | `-mqtt-host`          | `localhost`              | Hostname or IP of the MQTT broker.                             |
 | MQTT Port            | `MQTT_PORT`          | `-mqtt-port`          | `1883`                   | MQTT broker port.                                              |
 | MQTT Username        | `MQTT_USER`          | `-mqtt-user`          | *(none)*                 | Username for MQTT broker.                                      |

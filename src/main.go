@@ -21,6 +21,8 @@ var (
 	influxURL         = getEnvOrFlag("INFLUX_URL", "influx-url", "http://localhost:8086", "InfluxDB base URL")
 	influxDB          = getEnvOrFlag("INFLUX_DB", "influx-db", "ruuvi", "InfluxDB database name")
 	influxMeasurement = getEnvOrFlag("INFLUX_MEASUREMENT", "influx-measurement", "ruuvi_measurements", "InfluxDB measurement")
+	influxUser        = getEnvOrFlag("INFLUX_USER", "influx-user", "", "InfluxDB username (Basic auth; empty = no auth)")
+	influxPassword    = getEnvOrFlag("INFLUX_PASSWORD", "influx-password", "", "InfluxDB password")
 	mqttHost          = getEnvOrFlag("MQTT_HOST", "mqtt-host", "localhost", "MQTT broker host")
 	mqttPort          = getEnvOrFlagInt("MQTT_PORT", "mqtt-port", 1883, "MQTT broker port")
 	mqttUser          = getEnvOrFlag("MQTT_USER", "mqtt-user", "", "MQTT username")
@@ -222,11 +224,25 @@ func executeInfluxQuery() (map[string]map[string]interface{}, error) {
 	queryURL := fmt.Sprintf("%s/query?db=%s&q=%s", *influxURL, *influxDB, url.QueryEscape(query))
 	kitloglevel.Info(logger).Log("msg", "InfluxDB Query URL", "queryURL", queryURL)
 
-	resp, err := http.Get(queryURL)
+	// Credentials travel as a Basic auth header, never in the URL: queryURL is
+	// logged above, and a password in it would land in every log line.
+	req, err := http.NewRequest(http.MethodGet, queryURL, nil)
+	if err != nil {
+		return nil, err
+	}
+	if *influxUser != "" {
+		req.SetBasicAuth(*influxUser, *influxPassword)
+	}
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
+	// A 401 body is valid JSON with no series, so without this check an auth
+	// failure would look like "no tags seen" instead of an error.
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("influxdb query: HTTP %d", resp.StatusCode)
+	}
 	body, _ := ioutil.ReadAll(resp.Body)
 
 	var result struct {
